@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generar imágenes placeholder para portfolio</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; }
+    h1 { color: #C9A84C; }
+    .instruction { background: #f0f0f0; padding: 15px; margin: 15px 0; border-left: 4px solid #C9A84C; }
+    code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; }
+    button { background: #C9A84C; color: #0a0906; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+    button:hover { opacity: 0.9; }
+    .preview { margin-top: 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .preview img { width: 100%; height: auto; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>🖼️ Generador de Imágenes Placeholder</h1>
+  
+  <div class="instruction">
+    <strong>Paso 1:</strong> Haz clic en el botón "Descargar Imágenes" abajo para descargar 6 imágenes placeholder en SVG.
+  </div>
+  
+  <div class="instruction">
+    <strong>Paso 2:</strong> Coloca los archivos en: <code>c:\Users\Daniela\Desktop\SVC\public\images\portfolio\</code>
+  </div>
+  
+  <div class="instruction">
+    <strong>Paso 3:</strong> Actualiza las imágenes con fotos reales de SVC cuando estén disponibles.
+  </div>
+
+  <button onclick="downloadPlaceholders()">⬇️ Descargar 6 Imágenes Placeholder</button>
+
+  <h2>Vista previa:</h2>
+  <div class="preview" id="preview"></div>
+
+  <script>
+    const IMAGES = [
+      { name: 'cocina-1', title: 'Cocina Premium Roble', color: '#C9A84C' },
+      { name: 'detalle-1', title: 'Detalles de Herrajes', color: '#8B7355' },
+      { name: 'comedor-1', title: 'Comedor Moderno', color: '#B8956A' },
+      { name: 'placar-1', title: 'Placar Dormitorio', color: '#A68969' },
+      { name: 'bano-1', title: 'Mueble Baño', color: '#9D8B7A' },
+      { name: 'isla-1', title: 'Isla de Cocina', color: '#D4A574' },
+    ]
+
+    function createSVG(title, color) {
+      return `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="1200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:${color};stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1815;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#grad)"/>
+  <circle cx="600" cy="600" r="200" fill="rgba(255,255,255,0.1)"/>
+  <text x="600" y="630" font-size="48" text-anchor="middle" fill="white" font-family="serif" opacity="0.7">
+    ${title}
+  </text>
+  <text x="600" y="700" font-size="32" text-anchor="middle" fill="white" font-family="serif" opacity="0.5">
+    SVC Amoblamientos
+  </text>
+</svg>`
+    }
+
+    function downloadFile(filename, content) {
+      const blob = new Blob([content], { type: 'image/svg+xml' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = filename + '.svg'
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+    }
+
+    function downloadPlaceholders() {
+      IMAGES.forEach(img => {
+        const svg = createSVG(img.title, img.color)
+        setTimeout(() => {
+          downloadFile(img.name, svg)
+        }, 200)
+      })
+      alert('✅ Se están descargando 6 imágenes placeholder\n\nGuárdalas en:\nc:\\Users\\Daniela\\Desktop\\SVC\\public\\images\\portfolio\\\n\nNombres esperados:\n- cocina-1.svg\n- detalle-1.svg\n- comedor-1.svg\n- placar-1.svg\n- bano-1.svg\n- isla-1.svg')
+    }
+
+    // Mostrar vista previa
+    document.getElementById('preview').innerHTML = IMAGES.map(img => {
+      const svg = createSVG(img.title, img.color)
+      const url = 'data:image/svg+xml;base64,' + btoa(svg)
+      return `<img src="${url}" alt="${img.title}" style="border-radius: 8px; border: 1px solid #ddd;">`
+    }).join('')
+  </script>
+</body>
+</html>

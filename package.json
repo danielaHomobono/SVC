@@ -1,0 +1,34 @@
+{
+  "name": "carpinteria-landing",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.0.0",
+    "@react-three/fiber": "^8.13.0",
+    "framer-motion": "^12.0.0",
+    "gsap": "^3.12.0",
+    "lenis": "^1.3.0",
+    "next": "^15.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.0.0",
+    "three": "^0.165.0",
+    "zod": "^3.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.2",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@types/three": "latest",
+    "postcss": "^8.5.16",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.0.0"
+  }
+}

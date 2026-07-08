@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+:root {
+  --color-void: #0a0906;
+  --color-charcoal: #141210;
+  --color-surface: #1e1a16;
+  --color-oak-dark: #6b4c2e;
+  --color-oak: #9d6f42;
+  --color-oak-light: #c4956a;
+  --color-grain: #e8d5b8;
+  --color-cream: #f5f0e8;
+  --color-ivory: #faf7f2;
+  --color-gold: #c9a84c;
+  --color-gold-muted: #8a6f34;
+  
+  --font-display: var(--font-display), serif;
+  --font-body: var(--font-body), sans-serif;
+  --font-mono: var(--font-mono), monospace;
+  
+  --gradient-hero: linear-gradient(180deg, rgba(10,9,6,0) 0%, rgba(10,9,6,0.6) 60%, rgba(10,9,6,0.97) 100%);
+}
+
+html, body, #__next {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--color-void);
+  color: var(--color-cream);
+}
+
+/* Minimal utility for hero sizing */
+.hero-viewport {
+  height: 100dvh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Simple scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 24px;
+}
