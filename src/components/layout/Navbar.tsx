@@ -24,24 +24,18 @@ export default function Navbar() {
       <nav 
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled 
-            ? 'bg-void/95 backdrop-blur-md py-4 border-b border-gold/10 shadow-lg' 
-            : 'bg-void/85 backdrop-blur-md border-b border-gold/5 py-4 md:bg-transparent md:border-transparent md:py-6'
+            ? 'bg-[#0a0906]/90 backdrop-blur-md py-4 border-b border-gold/10 shadow-lg' 
+            : 'bg-[#0a0906] border-b border-gold/5 py-4 md:bg-transparent md:border-transparent md:py-6'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12 flex justify-between items-center relative z-50">
           {/* Logo and Brand Name */}
           <a href="#" className="flex items-center gap-3 group">
-            <div className="relative w-10 h-10 overflow-hidden rounded bg-charcoal flex items-center justify-center p-1 border border-gold/20 group-hover:border-gold transition-all duration-300">
-              <Image 
-                src="/images/portfolio/logo.png" 
-                alt="SVC Amoblamientos Logo" 
-                width={40} 
-                height={40} 
-                className="object-contain w-full h-full"
-              />
+            <div className="font-display font-semibold text-sm tracking-wider text-void bg-gold px-2.5 py-1 rounded border border-gold group-hover:bg-transparent group-hover:text-gold transition-all duration-300">
+              SVC
             </div>
-            <span className="font-display font-light text-xl tracking-wider text-ivory group-hover:text-gold transition-colors duration-300">
-              SVC <span className="font-semibold text-gold">Amoblamientos</span>
+            <span className="font-display font-light text-lg tracking-widest text-ivory group-hover:text-gold transition-colors duration-300 uppercase [text-shadow:_0_1px_3px_rgba(0,0,0,0.5)]">
+              Amoblamientos
             </span>
           </a>
 
@@ -51,14 +45,14 @@ export default function Navbar() {
               <a 
                 key={item} 
                 href={`#${item}`} 
-                className="font-mono text-xs uppercase tracking-widest text-grain hover:text-gold transition-colors duration-300 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px after:bg-gold after:transition-all after:duration-300 hover:after:w-full"
+                className="font-mono text-xs uppercase tracking-widest text-grain hover:text-gold transition-colors duration-300 relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px after:bg-gold after:transition-all after:duration-300 hover:after:w-full [text-shadow:_0_1px_3px_rgba(0,0,0,0.5)]"
               >
                 {item === 'servicios' ? 'Servicios' : item === 'portfolio' ? 'Portafolio' : 'Proceso'}
               </a>
             ))}
             <a 
               href="#contacto" 
-              className="px-6 py-2.5 bg-transparent border border-gold hover:bg-gold hover:text-void text-gold text-xs font-mono uppercase tracking-widest rounded transition-all duration-300 hover:shadow-[0_0_15px_rgba(201,168,76,0.4)]"
+              className="px-6 py-2.5 bg-transparent border border-gold hover:bg-gold hover:text-void text-gold text-xs font-mono uppercase tracking-widest rounded transition-all duration-300 hover:shadow-[0_0_15px_rgba(201,168,76,0.4)] [text-shadow:_0_1px_3px_rgba(0,0,0,0.5)]"
             >
               Presupuesto
             </a>
@@ -90,7 +84,7 @@ export default function Navbar() {
             key={item} 
             href={`#${item}`} 
             onClick={() => setIsMobileMenuOpen(false)}
-            className="font-display font-light text-2xl text-ivory hover:text-gold transition-colors duration-300"
+            className="font-display font-light text-2xl text-ivory hover:text-gold transition-colors duration-300 [text-shadow:_0_1px_3px_rgba(0,0,0,0.5)]"
           >
             {item === 'servicios' ? 'Servicios' : item === 'portfolio' ? 'Portafolio' : item === 'proceso' ? 'Proceso' : 'Contacto'}
           </a>
@@ -98,7 +92,7 @@ export default function Navbar() {
         <a 
           href="#contacto" 
           onClick={() => setIsMobileMenuOpen(false)}
-          className="mt-4 px-8 py-3 bg-gold text-void font-mono text-xs uppercase tracking-widest font-semibold rounded hover:bg-gold-muted hover:shadow-[0_0_20px_rgba(201,168,76,0.6)] transition-all duration-300"
+          className="mt-4 px-8 py-3 bg-gold text-void font-mono text-xs uppercase tracking-widest font-semibold rounded hover:bg-gold-muted hover:shadow-[0_0_20px_rgba(201,168,76,0.6)] transition-all duration-300 [text-shadow:_0_1px_3px_rgba(0,0,0,0.5)]"
         >
           Solicitar Presupuesto
         </a>

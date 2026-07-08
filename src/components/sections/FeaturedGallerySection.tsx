@@ -193,9 +193,9 @@ export default function FeaturedGallerySection() {
                 {/* Highlight badge */}
                 {work.highlight && (
                   <div className="absolute top-6 right-6 z-30">
-                    <div className="bg-gold/20 backdrop-blur-md border border-gold/40 rounded-full px-4 py-2">
-                      <span className="text-gold text-xs font-mono uppercase tracking-widest">
-                        ⭐ Destacado
+                    <div className="bg-[#0a0906]/85 backdrop-blur-md border border-gold/30 rounded px-3 py-1 shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+                      <span className="text-gold text-[10px] font-mono uppercase tracking-widest font-semibold">
+                        Destacado
                       </span>
                     </div>
                   </div>

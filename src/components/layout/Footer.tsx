@@ -12,17 +12,11 @@ export default function Footer() {
           {/* Logo & Tagline */}
           <div className="space-y-6">
             <div className="flex items-center gap-3">
-              <div className="relative w-10 h-10 overflow-hidden rounded bg-void flex items-center justify-center p-1 border border-gold/20">
-                <Image 
-                  src="/images/portfolio/logo.png" 
-                  alt="SVC Amoblamientos Logo" 
-                  width={40} 
-                  height={40} 
-                  className="object-contain w-full h-full"
-                />
+              <div className="font-display font-semibold text-sm tracking-wider text-void bg-gold px-2.5 py-1 rounded border border-gold">
+                SVC
               </div>
-              <span className="font-display font-light text-xl tracking-wider text-ivory">
-                SVC <span className="font-semibold text-gold">Amoblamientos</span>
+              <span className="font-display font-light text-lg tracking-widest text-ivory uppercase">
+                Amoblamientos
               </span>
             </div>
             <p className="text-grain/80 text-sm leading-relaxed max-w-xs">

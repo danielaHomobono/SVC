@@ -10,8 +10,8 @@
   --color-grain: #e8d5b8;
   --color-cream: #f5f0e8;
   --color-ivory: #faf7f2;
-  --color-gold: #c9a84c;
-  --color-gold-muted: #8a6f34;
+  --color-gold: #c9a876;
+  --color-gold-muted: #8e7550;
   
   --font-display: var(--font-display), serif;
   --font-body: var(--font-body), sans-serif;
@@ -44,4 +44,15 @@ body {
   left: 50%;
   transform: translateX(-50%);
   bottom: 24px;
+}
+
+/* Scroll offset for sticky navbar */
+section[id] {
+  scroll-margin-top: 80px;
+  scroll-behavior: smooth;
+}
+@media (min-width: 768px) {
+  section[id] {
+    scroll-margin-top: 100px;
+  }
 }

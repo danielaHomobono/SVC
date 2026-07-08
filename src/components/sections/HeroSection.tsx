@@ -36,22 +36,24 @@ export default function HeroSection() {
         muted
         loop
         playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover z-0"
+        className="absolute top-0 left-0 w-full h-full object-cover object-[30%_center] md:object-center z-0"
       >
         <source src="/videos/hero.mp4" type="video/mp4" />
         {/* Fallback image if video doesn't load */}
         <img
           src="/images/hero-fallback.jpg"
           alt="Carpintería SVC"
-          className="absolute top-0 left-0 w-full h-full object-cover z-0"
+          className="absolute top-0 left-0 w-full h-full object-cover object-[30%_center] md:object-center z-0"
         />
       </video>
 
       {/* Premium dark overlays to maximize text contrast and readability */}
       {/* 1. Responsive dark mask: Top-to-bottom on mobile, left-to-right on desktop */}
       <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-void/95 via-void/80 md:via-void/50 to-void/70 md:to-transparent z-10" />
-      {/* 2. Bottom-to-top dark mask to blend with the next section */}
-      <div className="absolute inset-0 bg-gradient-to-t from-void via-transparent to-transparent z-10" />
+      {/* 2. Top-to-bottom header protection mask to shield the transparent navbar */}
+      <div className="absolute top-0 left-0 right-0 h-36 bg-gradient-to-b from-[#0a0906]/85 via-[#0a0906]/40 to-transparent z-10 pointer-events-none" />
+      {/* 3. Dedicated bottom cinematic fade to black to transition smoothly into the gallery */}
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#0a0906] via-[#0a0906]/60 to-transparent z-10 pointer-events-none" />
 
       {/* Content */}
       <div className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-8 lg:px-12 flex items-center h-full pt-20">
