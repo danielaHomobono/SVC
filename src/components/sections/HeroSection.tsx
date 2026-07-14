@@ -7,8 +7,19 @@ import { BUSINESS, WHATSAPP_URL } from '@/lib/constants'
 
 export default function HeroSection() {
   const rootRef = useRef<HTMLDivElement | null>(null)
+  const videoRef = useRef<HTMLVideoElement | null>(null)
 
   useEffect(() => {
+    // Forzar silencio y reproducción del video en el cliente
+    // (Bypass para el bug de hidratación del atributo HTML 'muted' en React)
+    const video = videoRef.current
+    if (video) {
+      video.muted = true
+      video.play().catch((err) => {
+        console.warn("La reproducción automática del video fue bloqueada:", err)
+      })
+    }
+
     const { gsap } = initGSAP()
     if (!gsap) return
     
@@ -32,19 +43,15 @@ export default function HeroSection() {
     <section className="relative h-screen w-full overflow-hidden flex items-center bg-void" ref={rootRef}>
       {/* Video Background */}
       <video
+        ref={videoRef}
         autoPlay
         muted
         loop
         playsInline
+        poster="/images/hero-fallback.jpg"
         className="absolute top-0 left-0 w-full h-full object-cover object-[30%_center] md:object-center z-0"
       >
         <source src="/videos/hero.mp4" type="video/mp4" />
-        {/* Fallback image if video doesn't load */}
-        <img
-          src="/images/hero-fallback.jpg"
-          alt="Carpintería SVC"
-          className="absolute top-0 left-0 w-full h-full object-cover object-[30%_center] md:object-center z-0"
-        />
       </video>
 
       {/* Premium dark overlays to maximize text contrast and readability */}
@@ -57,18 +64,24 @@ export default function HeroSection() {
 
       {/* Content */}
       <div className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-8 lg:px-12 flex items-center h-full pt-20">
-        <div className="max-w-3xl space-y-6">
+        <div className="max-w-3xl space-y-5">
+          {/* Número/Etiqueta en DM Mono dorado con espaciado amplio */}
           <div className="hero-label inline-block">
-            <span className="text-gold text-xs font-mono tracking-widest uppercase bg-gold/10 px-3 py-1.5 rounded-full border border-gold/20">
+            <span className="text-gold text-[clamp(0.7rem,0.8vw,0.85rem)] font-mono tracking-[0.18em] uppercase opacity-85">
               Fábrica de Cocinas y Muebles · Río Tercero
             </span>
           </div>
           
-          <h1 className="hero-title font-display font-light text-ivory text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight tracking-wide [text-shadow:_0_4px_16px_rgba(0,0,0,0.95)]">
+          {/* Título principal en Cormorant Garamond itálico y ligero */}
+          <h1 className="hero-title font-display font-light italic text-ivory text-[clamp(2.5rem,5.5vw,5.5rem)] leading-[1.08] tracking-[-0.01em] [text-shadow:0_2px_60px_rgba(0,0,0,0.6),_0_1px_20px_rgba(0,0,0,0.4)]">
             <SplitText text="Muebles a medida que transforman espacios" by="words" />
           </h1>
           
-          <p className="hero-desc text-grain/90 text-base md:text-lg leading-relaxed max-w-xl font-light [text-shadow:_0_2px_8px_rgba(0,0,0,0.95)]">
+          {/* Línea decorativa dorada ultra fina */}
+          <div className="w-10 h-px bg-gold opacity-60 my-4" />
+          
+          {/* Subtítulo descriptivo en DM Sans ligero */}
+          <p className="hero-desc font-body font-light text-grain text-[clamp(0.9rem,1.1vw,1.1rem)] leading-[1.55] max-w-xl [text-shadow:0_2px_8px_rgba(0,0,0,0.95)]">
             Diseño y fabricación artesanal de amoblamientos premium. Cada proyecto es único y adaptado a tu estilo de vida.
           </p>
           
@@ -88,14 +101,6 @@ export default function HeroSection() {
               WhatsApp
             </a>
           </div>
-        </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-grain/60 hover:text-gold transition-colors duration-300 select-none">
-        <span className="text-[10px] font-mono tracking-widest uppercase">Scroll</span>
-        <div className="w-6 h-10 border border-grain/30 rounded-full flex justify-center p-1.5">
-          <div className="w-1 h-2 bg-gold rounded-full animate-bounce" />
         </div>
       </div>
     </section>
