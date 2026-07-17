@@ -88,6 +88,17 @@ export default function Footer() {
                   {BUSINESS.instagramHandle} →
                 </a>
               </li>
+              <li className="flex flex-col">
+                <span className="text-xs font-mono uppercase text-gold/60 tracking-wider">Facebook</span>
+                <a 
+                  href={BUSINESS.facebook} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:text-gold transition-colors duration-300 mt-1 font-mono text-xs uppercase tracking-widest text-gold"
+                >
+                  {BUSINESS.facebookHandle} →
+                </a>
+              </li>
             </ul>
           </div>
         </div>

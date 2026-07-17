@@ -64,6 +64,21 @@ export default function ContactSection() {
                 </div>
               </div>
 
+              {/* Facebook Card */}
+              <div className="flex gap-4 p-5 rounded-xl bg-void/30 border border-gold/5 hover:border-gold/20 transition-all duration-300">
+                <div className="w-12 h-12 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </div>
+                <div>
+                  <span className="text-xs font-mono uppercase text-gold/60 tracking-wider">Facebook</span>
+                  <a href={BUSINESS.facebook} target="_blank" rel="noopener noreferrer" className="block text-ivory hover:text-gold transition-colors duration-300 mt-1 font-medium">
+                    {BUSINESS.facebookHandle}
+                  </a>
+                </div>
+              </div>
+
               {/* Location Card */}
               <div className="flex gap-4 p-5 rounded-xl bg-void/30 border border-gold/5 hover:border-gold/20 transition-all duration-300">
                 <div className="w-12 h-12 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0">

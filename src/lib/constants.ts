@@ -8,6 +8,8 @@ export const BUSINESS = {
   phoneDisplay: '+54 9 3571 69-2109',
   instagram: 'https://www.instagram.com/svc_amoblamientos/',
   instagramHandle: '@svc_amoblamientos',
+  facebook: 'https://www.facebook.com/p/SVC-amoblamientos-100051401985732/?locale=es_LA',
+  facebookHandle: 'SVC Amoblamientos',
   googleMaps: 'https://www.google.com/maps/place/SVC+Amoblamientos/@-32.1764823,-64.1048062,17z',
   hours: {
     weekdays: 'Lunes a Viernes · 9 a 18hs',
