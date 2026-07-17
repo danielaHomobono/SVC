@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { WHATSAPP_URL } from '@/lib/constants'
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -22,15 +23,21 @@ export default function Navbar() {
   return (
     <>
       <nav 
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${
           isScrolled 
             ? 'bg-[#0a0906]/90 backdrop-blur-md py-4 border-b border-gold/10 shadow-lg' 
-            : 'bg-[#0a0906] border-b border-gold/5 py-4 md:bg-transparent md:border-transparent md:py-6'
+            : 'bg-transparent border-b border-transparent py-4 md:py-6'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12 flex justify-between items-center relative z-50">
           {/* Logo and Brand Name */}
-          <a href="#" className="flex items-center gap-3 group">
+          <a 
+            href="#" 
+            className="flex items-center gap-3 group"
+            style={{
+              textShadow: !isScrolled ? '0 2px 12px rgba(0,0,0,0.6)' : 'none',
+            }}
+          >
             <div className="font-display font-semibold text-sm tracking-wider text-void bg-gold px-2.5 py-1 rounded border border-gold group-hover:bg-transparent group-hover:text-gold transition-all duration-300">
               SVC
             </div>
@@ -63,6 +70,9 @@ export default function Navbar() {
             className="md:hidden text-ivory hover:text-gold focus:outline-none z-50 p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
+            style={{
+              filter: !isScrolled ? 'drop-shadow(0 2px 8px rgba(0,0,0,0.6))' : 'none',
+            }}
           >
             <div className="relative w-6 h-5 flex flex-col justify-between">
               <span className={`block h-0.5 bg-current transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
@@ -89,12 +99,33 @@ export default function Navbar() {
             {item === 'servicios' ? 'Servicios' : item === 'portfolio' ? 'Portafolio' : item === 'proceso' ? 'Proceso' : 'Contacto'}
           </a>
         ))}
-        <a 
-          href="#contacto" 
+        <a
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
           onClick={() => setIsMobileMenuOpen(false)}
-          className="mt-4 px-8 py-3 bg-gold text-void font-mono text-xs uppercase tracking-widest font-semibold rounded hover:bg-gold-muted hover:shadow-[0_0_20px_rgba(201,168,76,0.6)] transition-all duration-300 [text-shadow:_0_1px_3px_rgba(0,0,0,0.5)]"
+          className="font-mono text-xs uppercase tracking-widest font-semibold [text-shadow:_0_1px_3px_rgba(0,0,0,0.5)]"
+          style={{
+            marginTop: '2.5rem',
+            padding: '1rem 2.5rem',
+            background: 'var(--color-gold)',
+            color: 'var(--color-void)',
+            borderRadius: '999px',
+            textDecoration: 'none',
+            display: 'inline-block',
+            transition: 'all 300ms ease',
+            boxShadow: '0 4px 20px rgba(201, 168, 76, 0.25)',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-2px)'
+            e.currentTarget.style.boxShadow = '0 6px 28px rgba(201, 168, 76, 0.4)'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)'
+            e.currentTarget.style.boxShadow = '0 4px 20px rgba(201, 168, 76, 0.25)'
+          }}
         >
-          Solicitar Presupuesto
+          SOLICITAR PRESUPUESTO
         </a>
       </div>
     </>

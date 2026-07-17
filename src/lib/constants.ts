@@ -21,29 +21,33 @@ export const WHATSAPP_URL = `https://wa.me/5493571692109?text=${encodeURICompone
 )}`
 
 export const SERVICES = [
-  { 
-    id: 'cocinas', 
-    name: 'Cocinas Premium', 
-    description: 'Diseño y fabricación de muebles de cocina a medida. Aprovechamos cada espacio con soluciones inteligentes y materiales de primera calidad.',
-    features: ['Medidas personalizadas', 'Herrajes alemanes', 'Acabados a elección', 'Asesoramiento gratuito'],
+  {
+    id: 'cocinas',
+    name: 'Cocinas',
+    description: 'Diseño y fabricación de muebles de cocina a medida.',
+    image: '/images/portfolio/cocina-1.jpg',
+    features: ['Medidas personalizadas', 'Herrajes de primera'],
   },
-  { 
-    id: 'comedores', 
-    name: 'Comedores Elegantes', 
-    description: 'Mesas, sillas y aparadores que transforman cada comida en una experiencia memorable. Combinamos funcionalidad con diseño único.',
-    features: ['Maderas nobles', 'Diseño personalizado', 'Instalación incluida', 'Garantía 5 años'],
+  {
+    id: 'comedores',
+    name: 'Comedores',
+    description: 'Mesas, sillas y aparadores que transforman cada comida.',
+    image: '/images/portfolio/comedor-1.jpg',
+    features: ['Diseño personalizado', 'Maderas seleccionadas'],
   },
-  { 
-    id: 'dormitorios', 
-    name: 'Dormitorios Funcionales', 
-    description: 'Placares, cómodas y cabeceras que combinan funcionalidad y estética. Maximizamos el espacio de almacenamiento.',
-    features: ['Placares con espejo', 'Sistemas de organización', 'Iluminación integrada', 'Cierre suave'],
+  {
+    id: 'dormitorios',
+    name: 'Dormitorios',
+    description: 'Placares y cómodas que combinan funcionalidad y estética.',
+    image: '/images/portfolio/placar-1.jpg',
+    features: ['Placares con espejo', 'Sistemas de organización'],
   },
-  { 
-    id: 'baños', 
-    name: 'Baños Modernos', 
-    description: 'Vanitorios y muebles de baño que resisten la humedad con elegancia. Soluciones innovadoras para espacios reducidos.',
-    features: ['Materiales hidrófugos', 'Espacio de almacenamiento', 'Espejos con luz', 'Mantenimiento fácil'],
+  {
+    id: 'banos',
+    name: 'Baños',
+    description: 'Vanitorios y muebles de baño que resisten la humedad.',
+    image: '/images/portfolio/bano-1.jpg',
+    features: ['Materiales resistentes', 'Terminaciones premium'],
   },
 ]
 

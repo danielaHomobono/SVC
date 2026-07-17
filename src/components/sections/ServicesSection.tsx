@@ -1,122 +1,149 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
+import Image from 'next/image'
 import { SERVICES } from '@/lib/constants'
 import { initGSAP } from '@/lib/gsapConfig'
+
+function ServiceCard({ service, idx, isMobile }: { service: any; idx: number; isMobile: boolean }) {
+  return (
+    <div
+      className="bg-charcoal/40 border border-gold/10 hover:border-gold/30 rounded-2xl overflow-hidden shadow-2xl transition-all duration-500 hover:shadow-[0_10px_40px_rgba(201,168,76,0.08)] group"
+      style={{
+        display: 'flex',
+        flexDirection: isMobile ? 'column' : 'row',
+        width: '100%',
+        maxWidth: isMobile ? '32rem' : '58rem',
+      }}
+    >
+      {/* Imagen */}
+      <div
+        className="relative overflow-hidden"
+        style={{
+          width: isMobile ? '100%' : '50%',
+          height: isMobile ? '14rem' : '26rem',
+          flexShrink: 0,
+        }}
+      >
+        <Image
+          src={service.image}
+          alt={service.name}
+          fill
+          sizes="(max-width: 768px) 100vw, 30vw"
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: isMobile
+              ? 'linear-gradient(to bottom, rgba(10,9,6,0.1) 0%, rgba(20,18,16,0.9) 100%)'
+              : 'linear-gradient(to right, rgba(10,9,6,0.1) 0%, rgba(20,18,16,0.6) 100%)',
+          }}
+        />
+        {/* Número */}
+        <div className="absolute top-4 left-4 w-12 h-12 bg-gold/90 backdrop-blur rounded-lg flex items-center justify-center font-display text-xl font-bold text-void">
+          {String(idx + 1).padStart(2, '0')}
+        </div>
+      </div>
+
+      {/* Texto */}
+      <div
+        className="flex flex-col justify-center"
+        style={{
+          width: isMobile ? '100%' : '50%',
+          padding: isMobile ? '1.5rem' : '2.5rem',
+        }}
+      >
+        <h3 className="text-2xl md:text-3xl font-display font-light text-ivory mb-3 group-hover:text-gold transition-colors duration-300">
+          {service.name}
+        </h3>
+        <p className="text-grain/80 text-sm md:text-base leading-relaxed mb-5">
+          {service.description}
+        </p>
+        <ul className="flex flex-wrap gap-x-5 gap-y-2">
+          {service.features.map((feature: string, fIdx: number) => (
+            <li key={fIdx} className="relative pl-5 text-xs md:text-sm text-gold/90 font-light flex items-center">
+              <span className="absolute left-0 text-gold">✓</span>
+              {feature}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )
+}
 
 export default function ServicesSection() {
   const sectionRef = useRef<HTMLDivElement | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
-  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768)
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
-
-  useEffect(() => {
-    if (isMobile) return
-
     const { gsap, ScrollTrigger } = initGSAP()
     if (!gsap || !ScrollTrigger || !sectionRef.current || !containerRef.current) return
 
+    const mm = gsap.matchMedia()
     const container = containerRef.current
-    const sectionHeight = container.scrollWidth
-    
-    // Pin section and animate horizontal scroll - más compacto (150vh en lugar de 300vh)
-    const anim = gsap.to(container, {
-      x: -sectionHeight + window.innerWidth,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: () => `+=${sectionHeight * 0.36}`,
-        scrub: 1,
-        pin: true,
-        markers: false,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-      },
+
+    mm.add('(min-width: 768px)', () => {
+      const sectionHeight = container.scrollWidth
+      const anim = gsap.to(container, {
+        x: -sectionHeight + window.innerWidth,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: () => `+=${sectionHeight * 0.36}`,
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      })
+
+      return () => {
+        anim.kill()
+      }
     })
 
     return () => {
-      anim.kill()
-      ScrollTrigger.getAll().forEach((trigger: any) => {
-        if (trigger.trigger === sectionRef.current) {
-          trigger.kill()
-        }
-      })
+      mm.revert()
     }
-  }, [isMobile])
+  }, [])
 
   return (
     <section
       ref={sectionRef}
       id="servicios"
-      className="relative py-24 md:py-32 lg:py-40 bg-void"
-      style={{
-        overflow: 'hidden',
-        height: isMobile ? 'auto' : undefined,
-        paddingBottom: isMobile ? '3rem' : undefined
-      }}
+      className="relative bg-void overflow-hidden"
     >
-      {/* Contenedor principal para el scroll */}
-
-      {/* Horizontal Scroll Container */}
-      <div
-        ref={containerRef}
-        className="flex gap-8 md:gap-16 px-6 md:px-20 py-12 overflow-visible"
-        style={{
-          display: 'flex',
-          flexDirection: isMobile ? 'column' : 'row',
-        }}
-      >
-        {/* Service cards */}
+      {/* RENDER MOBILE (hidden on desktop) */}
+      <div className="md:hidden flex flex-col gap-6 px-4 py-12 w-full">
         {SERVICES.map((service, idx) => (
-          <div
-            key={service.id}
-            className="min-w-[85vw] lg:min-w-[60vw] flex items-center justify-center px-6"
-            style={{
-              width: isMobile ? '100%' : 'auto',
-              minWidth: isMobile ? '0' : undefined,
-              flexShrink: 0,
-              height: isMobile ? 'auto' : '100vh',
-              minHeight: isMobile ? 'auto' : '100vh',
-              padding: isMobile ? '2.5rem 1.5rem' : undefined,
-            }}
-          >
-            <div className="w-full max-w-2xl p-8 md:p-12 bg-charcoal/40 border border-gold/10 hover:border-gold/20 rounded-2xl backdrop-blur-md shadow-2xl transition-all duration-500 hover:shadow-[0_10px_40px_rgba(201,168,76,0.05)] group">
-              {/* Icon/Number */}
-              <div className="w-16 h-16 bg-gradient-to-br from-gold to-gold-muted rounded-xl flex items-center justify-center mb-8 font-display text-2xl font-bold text-void group-hover:scale-105 transition-transform duration-300">
-                {String(idx + 1).padStart(2, '0')}
-              </div>
-
-              {/* Title */}
-              <h3 className="text-2xl md:text-3xl font-display font-light text-ivory mb-4 group-hover:text-gold transition-colors duration-300">
-                {service.name}
-              </h3>
-
-              {/* Description */}
-              <p className="text-grain/80 text-sm md:text-base leading-relaxed mb-8">
-                {service.description}
-              </p>
-
-              {/* Features */}
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {service.features.map((feature: string, fIdx: number) => (
-                  <li
-                    key={fIdx}
-                    className="relative pl-6 text-sm text-gold/90 font-light flex items-center"
-                  >
-                    <span className="absolute left-0 text-gold text-lg">✓</span>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div key={service.id} className="w-full flex px-2 justify-center">
+            <ServiceCard service={service} idx={idx} isMobile={true} />
           </div>
         ))}
+      </div>
+
+      {/* RENDER DESKTOP (hidden on mobile) */}
+      <div className="hidden md:block">
+        <div
+          ref={containerRef}
+          className="flex gap-12 px-20 items-center overflow-visible"
+          style={{ height: '100vh' }}
+        >
+          {SERVICES.map((service, idx) => (
+            <div
+              key={service.id}
+              className="flex items-center justify-center"
+              style={{
+                minWidth: '70vw',
+                flexShrink: 0,
+              }}
+            >
+              <ServiceCard service={service} idx={idx} isMobile={false} />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )
