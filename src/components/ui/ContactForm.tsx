@@ -10,10 +10,10 @@ const schema = z.object({
   telefono: z.string().min(8, 'Ingresá un teléfono válido'),
   tipoProyecto: z.enum([
     'Cocina',
+    'Placar / Vestidor',
     'Baño',
-    'Dormitorio / Placard',
-    'Comedor',
-    'Mueble a medida',
+    'Rack de TV',
+    'Mueble comercial',
     'Otro',
   ]),
   mensaje: z.string().max(500).optional(),
@@ -26,7 +26,14 @@ const NUMERO_WHATSAPP = '5493571692109'
 export default function ContactForm() {
   const [isOpen, setIsOpen] = useState(false)
   const [selected, setSelected] = useState('Cocina')
-  const opciones = ['Cocina', 'Baño', 'Dormitorio / Placard', 'Comedor', 'Mueble a medida', 'Otro']
+  const opciones = [
+    'Cocina',
+    'Placar / Vestidor',
+    'Baño',
+    'Rack de TV',
+    'Mueble comercial',
+    'Otro',
+  ]
 
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -55,7 +62,7 @@ ${data.mensaje ? `*Mensaje:* ${data.mensaje}` : ''}`
     window.open(url, '_blank', 'noopener,noreferrer')
   }
 
-  const handleSelectOption = (op: 'Cocina' | 'Baño' | 'Dormitorio / Placard' | 'Comedor' | 'Mueble a medida' | 'Otro') => {
+  const handleSelectOption = (op: 'Cocina' | 'Placar / Vestidor' | 'Baño' | 'Rack de TV' | 'Mueble comercial' | 'Otro') => {
     setSelected(op)
     setValue('tipoProyecto', op)
     setIsOpen(false)
@@ -224,7 +231,7 @@ ${data.mensaje ? `*Mensaje:* ${data.mensaje}` : ''}`
             background: 'var(--color-gold)',
             color: 'var(--color-void)',
             border: 'none',
-            borderRadius: '2px',
+            borderRadius: '4px',
             fontFamily: 'var(--font-body)',
             fontSize: '1rem',
             fontWeight: 600,

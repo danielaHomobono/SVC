@@ -217,7 +217,27 @@ export default function ShowroomSection() {
               href="https://www.google.com/maps/place/SVC+Amoblamientos/@-32.1764823,-64.1048062,17z"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-3 border border-gold text-gold bg-transparent hover:bg-gold hover:text-void font-display font-medium text-base rounded transition-colors duration-300 cursor-pointer inline-block"
+              className="hover:scale-105 transition-all duration-300 cursor-pointer inline-flex items-center justify-center"
+              style={{
+                background: 'transparent',
+                color: 'var(--color-gold)',
+                border: '1px solid var(--color-gold)',
+                padding: '0.85rem 2.2rem',
+                fontFamily: 'var(--font-body)',
+                fontWeight: 500,
+                fontSize: '0.95rem',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                transition: 'all 300ms ease',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'var(--color-gold)'
+                e.currentTarget.style.color = 'var(--color-void)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent'
+                e.currentTarget.style.color = 'var(--color-gold)'
+              }}
             >
               Cómo llegar
             </a>

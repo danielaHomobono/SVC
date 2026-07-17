@@ -2,9 +2,8 @@ import React from 'react'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import HeroSection from '@/components/sections/HeroSection'
-import FeaturedGallerySection from '@/components/sections/FeaturedGallerySection'
 import ServicesSection from '@/components/sections/ServicesSection'
-import PortfolioSection from '@/components/sections/PortfolioSection'
+import GallerySection from '@/components/sections/GallerySection'
 import ProcessSection from '@/components/sections/ProcessSection'
 import ShowroomSection from '@/components/sections/ShowroomSection'
 import TestimonialsSection from '@/components/sections/TestimonialsSection'
@@ -20,9 +19,8 @@ export default function Page() {
       <Navbar />
       <main>
         <HeroSection />
-        <FeaturedGallerySection />
         <ServicesSection />
-        <PortfolioSection />
+        <GallerySection />
         <ProcessSection />
         <ShowroomSection />
         <TestimonialsSection />

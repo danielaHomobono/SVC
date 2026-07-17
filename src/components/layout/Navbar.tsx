@@ -30,19 +30,37 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12 flex justify-between items-center relative z-50">
-          {/* Logo and Brand Name */}
           <a 
             href="#" 
-            className="flex items-center gap-3 group"
-            style={{
-              textShadow: !isScrolled ? '0 2px 12px rgba(0,0,0,0.6)' : 'none',
-            }}
+            className="flex items-center gap-4 group"
           >
-            <div className="font-display font-semibold text-sm tracking-wider text-void bg-gold px-2.5 py-1 rounded border border-gold group-hover:bg-transparent group-hover:text-gold transition-all duration-300">
-              SVC
-            </div>
-            <span className="font-display font-light text-lg tracking-widest text-ivory group-hover:text-gold transition-colors duration-300 uppercase [text-shadow:_0_1px_3px_rgba(0,0,0,0.5)]">
-              Amoblamientos
+            <Image
+              src="/logo-cuadrados.png"
+              alt="SVC Amoblamientos"
+              width={54}
+              height={54}
+              style={{ height: '54px', width: 'auto' }}
+              priority
+            />
+            
+            {/* Separador vertical dorado — más visible */}
+            <div
+              style={{
+                width: '1.5px',
+                height: '38px',
+                background: 'linear-gradient(to bottom, transparent, var(--color-gold) 25%, var(--color-gold) 75%, transparent)',
+                opacity: 0.85,
+                boxShadow: '0 0 6px rgba(201, 168, 76, 0.4)',
+              }}
+            />
+
+            <span
+              className="font-display font-light text-lg md:text-xl tracking-widest text-ivory group-hover:text-gold transition-colors duration-300 uppercase"
+              style={{
+                textShadow: !isScrolled ? '0 2px 12px rgba(0,0,0,0.6)' : 'none',
+              }}
+            >
+              AMOBLAMIENTOS
             </span>
           </a>
 
@@ -110,7 +128,7 @@ export default function Navbar() {
             padding: '1rem 2.5rem',
             background: 'var(--color-gold)',
             color: 'var(--color-void)',
-            borderRadius: '999px',
+            borderRadius: '4px',
             textDecoration: 'none',
             display: 'inline-block',
             transition: 'all 300ms ease',

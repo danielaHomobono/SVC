@@ -27,7 +27,11 @@ const dmMono = DM_Mono({
 
 export const metadata = {
   title: 'SVC Amoblamientos — Carpintería Premium & Muebles a Medida | Río Tercero',
-  description: 'Fabricación artesanal de amoblamientos premium en Río Tercero, Córdoba. Cocinas, vestidores, baños y comedores diseñados a tu medida.'
+  description: 'Fabricación artesanal de amoblamientos premium en Río Tercero, Córdoba. Cocinas, vestidores, baños y comedores diseñados a tu medida.',
+  icons: {
+    icon: '/icon.png',
+    apple: '/apple-icon.png',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

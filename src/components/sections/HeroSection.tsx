@@ -131,23 +131,23 @@ export default function HeroSection() {
               href="#portfolio" 
               className="hover:scale-105 transition-all duration-300 cursor-pointer flex items-center justify-center"
               style={{
-                background: 'var(--color-ivory)',
+                background: 'var(--color-gold)',
                 color: 'var(--color-void)',
                 border: 'none',
                 padding: '0.85rem 2.2rem',
                 fontFamily: 'var(--font-body)',
                 fontWeight: 500,
                 fontSize: '0.95rem',
-                borderRadius: '2px',
+                borderRadius: '4px',
                 cursor: 'pointer',
                 transition: 'all 300ms ease',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'var(--color-gold)'
+                e.currentTarget.style.background = 'var(--color-ivory)'
                 e.currentTarget.style.color = 'var(--color-void)'
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'var(--color-ivory)'
+                e.currentTarget.style.background = 'var(--color-gold)'
                 e.currentTarget.style.color = 'var(--color-void)'
               }}
             >
@@ -160,23 +160,23 @@ export default function HeroSection() {
               className="hover:scale-105 transition-all duration-300 cursor-pointer flex items-center justify-center"
               style={{
                 background: 'transparent',
-                color: 'var(--color-ivory)',
-                border: '1px solid rgba(245, 240, 232, 0.4)',
+                color: 'var(--color-gold)',
+                border: '1px solid var(--color-gold)',
                 padding: '0.85rem 2.2rem',
                 fontFamily: 'var(--font-body)',
                 fontWeight: 400,
                 fontSize: '0.95rem',
-                borderRadius: '2px',
+                borderRadius: '4px',
                 cursor: 'pointer',
                 transition: 'all 300ms ease',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'var(--color-gold)'
-                e.currentTarget.style.color = 'var(--color-gold)'
+                e.currentTarget.style.borderColor = 'var(--color-ivory)'
+                e.currentTarget.style.color = 'var(--color-ivory)'
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(245, 240, 232, 0.4)'
-                e.currentTarget.style.color = 'var(--color-ivory)'
+                e.currentTarget.style.borderColor = 'var(--color-gold)'
+                e.currentTarget.style.color = 'var(--color-gold)'
               }}
             >
               WhatsApp
