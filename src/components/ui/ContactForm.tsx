@@ -3,159 +3,249 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import * as z from 'zod'
+import { z } from 'zod'
 
 const schema = z.object({
-  nombre: z.string().min(2, { message: 'El nombre debe tener al menos 2 caracteres.' }),
-  telefono: z.string().min(8, { message: 'El teléfono debe tener al menos 8 números.' }),
-  email: z.string().email({ message: 'Ingresa un correo electrónico válido.' }).or(z.literal('')),
-  servicio: z.enum(['cocinas', 'comedores', 'dormitorios', 'baños', 'otro']),
-  mensaje: z.string().min(10, { message: 'El mensaje debe tener al menos 10 caracteres.' }).max(500),
+  nombre: z.string().min(2, 'Ingresá tu nombre'),
+  telefono: z.string().min(8, 'Ingresá un teléfono válido'),
+  tipoProyecto: z.enum([
+    'Cocina',
+    'Baño',
+    'Dormitorio / Placard',
+    'Comedor',
+    'Mueble a medida',
+    'Otro',
+  ]),
+  mensaje: z.string().max(500).optional(),
 })
 
 type FormData = z.infer<typeof schema>
 
-export default function ContactForm() {
-  const [isSubmitSuccessful, setIsSubmitSuccessful] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
+const NUMERO_WHATSAPP = '5493571692109'
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+export default function ContactForm() {
+  const [isOpen, setIsOpen] = useState(false)
+  const [selected, setSelected] = useState('Cocina')
+  const opciones = ['Cocina', 'Baño', 'Dormitorio / Placard', 'Comedor', 'Mueble a medida', 'Otro']
+
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
       nombre: '',
       telefono: '',
-      email: '',
-      servicio: 'cocinas',
+      tipoProyecto: 'Cocina',
       mensaje: '',
     }
   })
 
-  function onSubmit(data: FormData) {
-    setIsSubmitting(true)
-    // Simular envío de datos a servidor de forma limpia
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setIsSubmitSuccessful(true)
-    }, 1500)
+  const onSubmit = (data: FormData) => {
+    // Armar el mensaje con los datos del formulario
+    const mensaje = `Hola! Quiero hacer una consulta.
+
+*Nombre:* ${data.nombre}
+*Teléfono:* ${data.telefono}
+*Tipo de proyecto:* ${data.tipoProyecto}
+${data.mensaje ? `*Mensaje:* ${data.mensaje}` : ''}`
+
+    // Codificar el mensaje para URL
+    const mensajeCodificado = encodeURIComponent(mensaje.trim())
+
+    // Abrir WhatsApp con el mensaje pre-cargado
+    const url = `https://wa.me/${NUMERO_WHATSAPP}?text=${mensajeCodificado}`
+    window.open(url, '_blank', 'noopener,noreferrer')
   }
 
-  if (isSubmitSuccessful) {
-    return (
-      <div className="bg-charcoal/50 border border-gold/20 rounded-xl p-8 text-center space-y-4 max-w-md mx-auto backdrop-blur-md">
-        <div className="w-16 h-16 bg-gold/10 border border-gold/30 rounded-full flex items-center justify-center mx-auto text-gold text-2xl">
-          ✓
-        </div>
-        <h3 className="font-display font-light text-2xl text-ivory">¡Consulta Recibida!</h3>
-        <p className="text-grain/80 text-sm leading-relaxed">
-          Gracias por comunicarte con SVC Amoblamientos. Nos pondremos en contacto a la brevedad para asesorarte en tu proyecto.
-        </p>
-        <button 
-          onClick={() => setIsSubmitSuccessful(false)}
-          className="mt-4 text-xs font-mono uppercase tracking-widest text-gold hover:text-ivory transition-colors duration-300"
-        >
-          Enviar otro mensaje
-        </button>
-      </div>
-    )
+  const handleSelectOption = (op: 'Cocina' | 'Baño' | 'Dormitorio / Placard' | 'Comedor' | 'Mueble a medida' | 'Otro') => {
+    setSelected(op)
+    setValue('tipoProyecto', op)
+    setIsOpen(false)
+  }
+
+  // Styles defined in the prompt:
+  const inputStyle: React.CSSProperties = {
+    width: '100%',
+    background: 'transparent',
+    border: 'none',
+    borderBottom: '1px solid rgba(201, 168, 76, 0.3)',
+    padding: '0.75rem 0',
+    color: 'var(--color-cream)',
+    fontFamily: 'var(--font-body)',
+    fontSize: '1rem',
+    outline: 'none',
+    borderRadius: 0,
+    boxShadow: 'none',
+    transition: 'border-color 300ms ease',
+  }
+
+  const labelStyle: React.CSSProperties = {
+    fontFamily: 'var(--font-mono)',
+    fontSize: '0.7rem',
+    textTransform: 'uppercase',
+    letterSpacing: '0.1em',
+    color: 'var(--color-grain)',
+    marginBottom: '0.5rem',
+    display: 'block',
+  }
+
+  const errorStyle: React.CSSProperties = {
+    color: '#ef4444', // Red-500 fallback for var(--color-error)
+    fontSize: '0.8rem',
+    marginTop: '0.35rem',
+    fontFamily: 'var(--font-body)',
+    display: 'block',
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-xl mx-auto">
-      {/* Name Input */}
-      <div className="relative group">
-        <input 
+      {/* Label superior del formulario */}
+      <div className="mb-4">
+        <span className="text-gold text-xs font-mono tracking-widest uppercase">
+          Contanos tu proyecto y te respondemos por WhatsApp
+        </span>
+      </div>
+
+      {/* Nombre */}
+      <div>
+        <label style={labelStyle}>Nombre completo</label>
+        <input
           type="text"
-          placeholder=" "
+          placeholder="Tu nombre completo"
           {...register('nombre')}
-          className={`w-full bg-void/50 border ${errors.nombre ? 'border-red-500/50 focus:border-red-500' : 'border-gold/20 focus:border-gold'} rounded-lg px-4 pt-6 pb-2 text-ivory text-base focus:outline-none transition-colors duration-300 peer`}
+          style={inputStyle}
+          className="focus:border-b-gold transition-colors duration-300 placeholder:text-grain/25"
         />
-        <label className="absolute left-4 top-2 text-grain/60 text-xs uppercase tracking-wider font-mono transition-all duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:top-4 peer-focus:top-2 peer-focus:text-xs peer-focus:text-gold pointer-events-none">
-          Nombre completo
-        </label>
         {errors.nombre && (
-          <span className="text-red-500 text-xs block mt-1 font-mono">{errors.nombre.message}</span>
+          <span style={errorStyle}>{errors.nombre.message}</span>
         )}
       </div>
 
-      {/* Phone and Email Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        {/* Phone Input */}
-        <div className="relative group">
-          <input 
-            type="tel"
-            placeholder=" "
-            {...register('telefono')}
-            className={`w-full bg-void/50 border ${errors.telefono ? 'border-red-500/50 focus:border-red-500' : 'border-gold/20 focus:border-gold'} rounded-lg px-4 pt-6 pb-2 text-ivory text-base focus:outline-none transition-colors duration-300 peer`}
-          />
-          <label className="absolute left-4 top-2 text-grain/60 text-xs uppercase tracking-wider font-mono transition-all duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:top-4 peer-focus:top-2 peer-focus:text-xs peer-focus:text-gold pointer-events-none">
-            Teléfono
-          </label>
-          {errors.telefono && (
-            <span className="text-red-500 text-xs block mt-1 font-mono">{errors.telefono.message}</span>
-          )}
-        </div>
-
-        {/* Email Input */}
-        <div className="relative group">
-          <input 
-            type="email"
-            placeholder=" "
-            {...register('email')}
-            className={`w-full bg-void/50 border ${errors.email ? 'border-red-500/50 focus:border-red-500' : 'border-gold/20 focus:border-gold'} rounded-lg px-4 pt-6 pb-2 text-ivory text-base focus:outline-none transition-colors duration-300 peer`}
-          />
-          <label className="absolute left-4 top-2 text-grain/60 text-xs uppercase tracking-wider font-mono transition-all duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:top-4 peer-focus:top-2 peer-focus:text-xs peer-focus:text-gold pointer-events-none">
-            Email (Opcional)
-          </label>
-          {errors.email && (
-            <span className="text-red-500 text-xs block mt-1 font-mono">{errors.email.message}</span>
-          )}
-        </div>
-      </div>
-
-      {/* Service Selector */}
-      <div className="relative group">
-        <select 
-          {...register('servicio')}
-          className="w-full bg-void/50 border border-gold/20 rounded-lg px-4 pt-6 pb-2 text-ivory text-base focus:outline-none focus:border-gold transition-colors duration-300 appearance-none cursor-pointer"
-        >
-          <option value="cocinas" className="bg-charcoal text-ivory">Cocinas Premium</option>
-          <option value="comedores" className="bg-charcoal text-ivory">Comedores Elegantes</option>
-          <option value="dormitorios" className="bg-charcoal text-ivory">Dormitorios Funcionales</option>
-          <option value="baños" className="bg-charcoal text-ivory">Baños Modernos</option>
-          <option value="otro" className="bg-charcoal text-ivory">Otros Proyectos</option>
-        </select>
-        <label className="absolute left-4 top-2 text-grain/60 text-xs uppercase tracking-wider font-mono pointer-events-none">
-          Tipo de Proyecto
-        </label>
-        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gold/60">
-          ▼
-        </div>
-      </div>
-
-      {/* Message Textarea */}
-      <div className="relative group">
-        <textarea 
-          placeholder=" "
-          rows={5}
-          {...register('mensaje')}
-          className={`w-full bg-void/50 border ${errors.mensaje ? 'border-red-500/50 focus:border-red-500' : 'border-gold/20 focus:border-gold'} rounded-lg px-4 pt-6 pb-2 text-ivory text-base focus:outline-none transition-colors duration-300 peer resize-none`}
+      {/* Teléfono */}
+      <div>
+        <label style={labelStyle}>Teléfono</label>
+        <input
+          type="tel"
+          placeholder="Ej: +54 9 3571 00-0000"
+          {...register('telefono')}
+          style={inputStyle}
+          className="focus:border-b-gold transition-colors duration-300 placeholder:text-grain/25"
         />
-        <label className="absolute left-4 top-2 text-grain/60 text-xs uppercase tracking-wider font-mono transition-all duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:top-4 peer-focus:top-2 peer-focus:text-xs peer-focus:text-gold pointer-events-none">
-          Contanos tu idea o proyecto...
-        </label>
+        {errors.telefono && (
+          <span style={errorStyle}>{errors.telefono.message}</span>
+        )}
+      </div>
+
+      {/* Tipo de proyecto */}
+      <div style={{ position: 'relative', marginBottom: '2rem' }}>
+        <label style={labelStyle}>Tipo de proyecto</label>
+        <input type="hidden" {...register('tipoProyecto')} value={selected} />
+        <div
+          onClick={() => setIsOpen(!isOpen)}
+          style={{
+            padding: '0.75rem 0',
+            borderBottom: '1px solid rgba(201, 168, 76, 0.3)',
+            color: 'var(--color-cream)',
+            cursor: 'pointer',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            fontFamily: 'var(--font-body)',
+            fontSize: '1rem',
+          }}
+        >
+          {selected}
+          <span style={{ color: 'var(--color-gold)' }}>{isOpen ? '▲' : '▼'}</span>
+        </div>
+
+        {isOpen && (
+          <div style={{
+            position: 'absolute',
+            top: '100%',
+            left: 0,
+            right: 0,
+            background: 'var(--color-void)',
+            border: '1px solid rgba(201, 168, 76, 0.3)',
+            borderRadius: '2px',
+            marginTop: '4px',
+            zIndex: 100,
+            overflow: 'hidden',
+            boxShadow: '0 10px 40px rgba(0,0,0,0.6)',
+          }}>
+            {opciones.map((op) => (
+              <div
+                key={op}
+                onClick={() => handleSelectOption(op as any)}
+                style={{
+                  padding: '0.75rem 1rem',
+                  color: 'var(--color-cream)',
+                  cursor: 'pointer',
+                  fontFamily: 'var(--font-body)',
+                  fontSize: '0.95rem',
+                  transition: 'background 200ms ease',
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-oak-dark)' }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
+              >
+                {op}
+              </div>
+            ))}
+          </div>
+        )}
+        {errors.tipoProyecto && (
+          <span style={errorStyle}>{errors.tipoProyecto.message}</span>
+        )}
+      </div>
+
+      {/* Mensaje */}
+      <div>
+        <label style={labelStyle}>Mensaje (opcional)</label>
+        <textarea
+          placeholder="Escribí aquí los detalles de tu consulta..."
+          rows={4}
+          {...register('mensaje')}
+          style={inputStyle}
+          className="focus:border-b-gold transition-colors duration-300 resize-none placeholder:text-grain/25"
+        />
         {errors.mensaje && (
-          <span className="text-red-500 text-xs block mt-1 font-mono">{errors.mensaje.message}</span>
+          <span style={errorStyle}>{errors.mensaje.message}</span>
         )}
       </div>
 
       {/* Submit Button */}
-      <button 
-        type="submit" 
-        disabled={isSubmitting}
-        className="w-full py-4 bg-gold hover:bg-gold-muted text-void font-display font-medium text-lg rounded-lg transition-all duration-500 hover:shadow-[0_0_25px_rgba(201,168,76,0.4)] disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {isSubmitting ? 'Enviando...' : 'Enviar Consulta'}
-      </button>
+      <div className="pt-4">
+        <button
+          type="submit"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '0.65rem',
+            width: '100%',
+            padding: '1rem',
+            background: 'var(--color-gold)',
+            color: 'var(--color-void)',
+            border: 'none',
+            borderRadius: '2px',
+            fontFamily: 'var(--font-body)',
+            fontSize: '1rem',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 300ms ease',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'var(--color-gold-muted)'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'var(--color-gold)'
+          }}
+        >
+          {/* Ícono WhatsApp — mantener, ahora en color oscuro */}
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.565 4.14 1.543 5.877L.057 23.5l5.773-1.486A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.034-1.389l-.361-.214-3.424.881.91-3.317-.235-.381A9.818 9.818 0 1112 21.818z"/>
+          </svg>
+          Enviar consulta por WhatsApp
+        </button>
+      </div>
     </form>
   )
 }

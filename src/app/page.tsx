@@ -6,6 +6,7 @@ import FeaturedGallerySection from '@/components/sections/FeaturedGallerySection
 import ServicesSection from '@/components/sections/ServicesSection'
 import PortfolioSection from '@/components/sections/PortfolioSection'
 import ProcessSection from '@/components/sections/ProcessSection'
+import ShowroomSection from '@/components/sections/ShowroomSection'
 import TestimonialsSection from '@/components/sections/TestimonialsSection'
 import ContactSection from '@/components/sections/ContactSection'
 import WhatsAppButton from '@/components/ui/WhatsAppButton'
@@ -23,6 +24,7 @@ export default function Page() {
         <ServicesSection />
         <PortfolioSection />
         <ProcessSection />
+        <ShowroomSection />
         <TestimonialsSection />
         <ContactSection />
       </main>

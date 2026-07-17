@@ -2,7 +2,7 @@
 
 import React from 'react'
 import ContactForm from '@/components/ui/ContactForm'
-import { BUSINESS } from '@/lib/constants'
+import { BUSINESS, WHATSAPP_URL } from '@/lib/constants'
 
 export default function ContactSection() {
   return (
@@ -41,23 +41,25 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <span className="text-xs font-mono uppercase text-gold/60 tracking-wider">WhatsApp</span>
-                  <a href={`https://wa.me/${BUSINESS.phone.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="block text-ivory hover:text-gold transition-colors duration-300 mt-1 font-medium">
-                    {BUSINESS.phone}
+                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="block text-ivory hover:text-gold transition-colors duration-300 mt-1 font-medium">
+                    {BUSINESS.phoneDisplay}
                   </a>
                 </div>
               </div>
 
-              {/* Email Card */}
+              {/* Instagram Card */}
               <div className="flex gap-4 p-5 rounded-xl bg-void/30 border border-gold/5 hover:border-gold/20 transition-all duration-300">
                 <div className="w-12 h-12 rounded-lg bg-gold/10 flex items-center justify-center text-gold shrink-0">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
                   </svg>
                 </div>
                 <div>
-                  <span className="text-xs font-mono uppercase text-gold/60 tracking-wider">Email</span>
-                  <a href={`mailto:${BUSINESS.email}`} className="block text-ivory hover:text-gold transition-colors duration-300 mt-1 font-medium">
-                    {BUSINESS.email}
+                  <span className="text-xs font-mono uppercase text-gold/60 tracking-wider">Instagram</span>
+                  <a href={BUSINESS.instagram} target="_blank" rel="noopener noreferrer" className="block text-ivory hover:text-gold transition-colors duration-300 mt-1 font-medium">
+                    {BUSINESS.instagramHandle}
                   </a>
                 </div>
               </div>
@@ -72,7 +74,7 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <span className="text-xs font-mono uppercase text-gold/60 tracking-wider">Fábrica y Showroom</span>
-                  <p className="text-ivory mt-1 font-medium">{BUSINESS.city}</p>
+                  <p className="text-ivory mt-1 font-medium">{BUSINESS.address}</p>
                 </div>
               </div>
             </div>

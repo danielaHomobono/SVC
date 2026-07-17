@@ -1,8 +1,7 @@
 'use client'
 
 import React from 'react'
-import Image from 'next/image'
-import { BUSINESS } from '@/lib/constants'
+import { BUSINESS, WHATSAPP_URL } from '@/lib/constants'
 
 export default function Footer() {
   return (
@@ -20,7 +19,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-grain/80 text-sm leading-relaxed max-w-xs">
-              {BUSINESS.tagline || 'Diseño y fabricación artesanal de amoblamientos premium para transformar tu hogar.'}
+              Diseño y fabricación de muebles a medida en Río Tercero, Córdoba. Cocinas, vestidores y amoblamientos de alta calidad.
             </p>
             <p className="text-gold text-xs font-mono tracking-wider">
               RÍO TERCERO · CÓRDOBA
@@ -56,19 +55,13 @@ export default function Footer() {
             <ul className="space-y-4 text-sm text-grain/80">
               <li className="flex flex-col">
                 <span className="text-xs font-mono uppercase text-gold/60 tracking-wider">WhatsApp</span>
-                <a href={`https://wa.me/${BUSINESS.phone.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors duration-300 mt-1">
-                  {BUSINESS.phone}
-                </a>
-              </li>
-              <li className="flex flex-col">
-                <span className="text-xs font-mono uppercase text-gold/60 tracking-wider">Email</span>
-                <a href={`mailto:${BUSINESS.email}`} className="hover:text-gold transition-colors duration-300 mt-1">
-                  {BUSINESS.email}
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors duration-300 mt-1">
+                  {BUSINESS.phoneDisplay}
                 </a>
               </li>
               <li className="flex flex-col">
                 <span className="text-xs font-mono uppercase text-gold/60 tracking-wider">Dirección</span>
-                <span className="mt-1">{BUSINESS.city}</span>
+                <span className="mt-1">{BUSINESS.address}</span>
               </li>
             </ul>
           </div>
@@ -80,18 +73,19 @@ export default function Footer() {
             </h4>
             <ul className="space-y-4 text-sm text-grain/80">
               <li className="flex flex-col">
-                <span className="text-xs font-mono uppercase text-gold/60 tracking-wider">Atención de Fábrica</span>
-                <span className="mt-1">Lunes a Viernes: 8:00 a 17:00 hs</span>
+                <span className="text-xs font-mono uppercase text-gold/60 tracking-wider">Horarios de atención</span>
+                <span className="mt-1">{BUSINESS.hours.weekdays}</span>
+                <span className="mt-0.5">{BUSINESS.hours.saturday}</span>
               </li>
               <li className="flex flex-col">
                 <span className="text-xs font-mono uppercase text-gold/60 tracking-wider">Instagram</span>
                 <a 
-                  href={`https://instagram.com/${BUSINESS.instagram.replace('@', '')}`} 
+                  href={BUSINESS.instagram} 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="hover:text-gold transition-colors duration-300 mt-1 font-mono text-xs uppercase tracking-widest text-gold"
                 >
-                  {BUSINESS.instagram} →
+                  {BUSINESS.instagramHandle} →
                 </a>
               </li>
             </ul>

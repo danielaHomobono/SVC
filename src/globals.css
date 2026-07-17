@@ -56,3 +56,27 @@ section[id] {
     scroll-margin-top: 100px;
   }
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #0a0906 inset !important;
+  -webkit-text-fill-color: #f5f0e8 !important;
+  caret-color: #f5f0e8 !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.3) !important;
+  transition: background-color 9999s ease-in-out 0s !important;
+}
+
+select option {
+  background-color: #141210;
+  color: #f5f0e8;
+}
+
+select option:hover,
+select option:focus,
+select option:checked {
+  background-color: #9d6f42;
+  color: #faf7f2;
+}

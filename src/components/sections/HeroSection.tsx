@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { initGSAP } from '@/lib/gsapConfig'
 import SplitText from '@/components/ui/SplitText'
 import { BUSINESS, WHATSAPP_URL } from '@/lib/constants'
@@ -8,6 +8,14 @@ import { BUSINESS, WHATSAPP_URL } from '@/lib/constants'
 export default function HeroSection() {
   const rootRef = useRef<HTMLDivElement | null>(null)
   const videoRef = useRef<HTMLVideoElement | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     // Forzar silencio y reproducción del video en el cliente
@@ -54,21 +62,54 @@ export default function HeroSection() {
         <source src="/videos/hero.mp4" type="video/mp4" />
       </video>
 
-      {/* Premium dark overlays to maximize text contrast and readability */}
-      {/* 1. Responsive dark mask: Top-to-bottom on mobile, left-to-right on desktop */}
-      <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-void/95 via-void/80 md:via-void/50 to-void/70 md:to-transparent z-10" />
-      {/* 2. Top-to-bottom header protection mask to shield the transparent navbar */}
-      <div className="absolute top-0 left-0 right-0 h-36 bg-gradient-to-b from-[#0a0906]/85 via-[#0a0906]/40 to-transparent z-10 pointer-events-none" />
-      {/* 3. Dedicated bottom cinematic fade to black to transition smoothly into the gallery */}
-      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#0a0906] via-[#0a0906]/60 to-transparent z-10 pointer-events-none" />
+      {/* Overlay para legibilidad del texto */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: isMobile
+            ? 'linear-gradient(to bottom, rgba(10,9,6,0.5) 0%, rgba(10,9,6,0.3) 40%, rgba(10,9,6,0.85) 100%)'
+            : `
+              linear-gradient(
+                to right,
+                rgba(10,9,6,0.85) 0%,
+                rgba(10,9,6,0.6) 35%,
+                rgba(10,9,6,0.15) 65%,
+                rgba(10,9,6,0) 100%
+              ),
+              linear-gradient(
+                to bottom,
+                rgba(10,9,6,0.4) 0%,
+                rgba(10,9,6,0) 25%,
+                rgba(10,9,6,0) 60%,
+                rgba(10,9,6,0.7) 100%
+              )
+            `,
+          pointerEvents: 'none',
+          zIndex: 10,
+        }}
+      />
 
       {/* Content */}
       <div className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-8 lg:px-12 flex items-center h-full pt-20">
         <div className="max-w-3xl space-y-5">
           {/* Número/Etiqueta en DM Mono dorado con espaciado amplio */}
           <div className="hero-label inline-block">
-            <span className="text-gold text-[clamp(0.7rem,0.8vw,0.85rem)] font-mono tracking-[0.18em] uppercase opacity-85">
-              Fábrica de Cocinas y Muebles · Río Tercero
+            <span
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: 'clamp(0.62rem, 0.75vw, 0.78rem)',
+                fontWeight: 500,
+                color: 'var(--color-gold)',
+                letterSpacing: '0.22em',
+                textTransform: 'uppercase',
+                marginBottom: '1.5rem',
+                textShadow: '0 2px 20px rgba(0,0,0,0.7)',
+                opacity: 1,
+                display: 'inline-block',
+              }}
+            >
+              FÁBRICA DE MUEBLES · RÍO TERCERO, CÓRDOBA
             </span>
           </div>
           
@@ -82,13 +123,33 @@ export default function HeroSection() {
           
           {/* Subtítulo descriptivo en DM Sans ligero */}
           <p className="hero-desc font-body font-light text-grain text-[clamp(0.9rem,1.1vw,1.1rem)] leading-[1.55] max-w-xl [text-shadow:0_2px_8px_rgba(0,0,0,0.95)]">
-            Diseño y fabricación artesanal de amoblamientos premium. Cada proyecto es único y adaptado a tu estilo de vida.
+            Diseñamos y fabricamos cocinas, vestidores y muebles para toda la casa. Cada proyecto es único.
           </p>
           
           <div className="hero-ctas flex flex-wrap gap-4 pt-4">
             <a 
               href="#portfolio" 
-              className="px-8 py-4 bg-gold hover:bg-gold-muted text-void font-display font-medium text-base rounded shadow-[0_4px_20px_rgba(201,168,76,0.25)] hover:shadow-[0_4px_25px_rgba(201,168,76,0.45)] hover:scale-105 transition-all duration-300 cursor-pointer"
+              className="hover:scale-105 transition-all duration-300 cursor-pointer flex items-center justify-center"
+              style={{
+                background: 'var(--color-ivory)',
+                color: 'var(--color-void)',
+                border: 'none',
+                padding: '0.85rem 2.2rem',
+                fontFamily: 'var(--font-body)',
+                fontWeight: 500,
+                fontSize: '0.95rem',
+                borderRadius: '2px',
+                cursor: 'pointer',
+                transition: 'all 300ms ease',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'var(--color-gold)'
+                e.currentTarget.style.color = 'var(--color-void)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'var(--color-ivory)'
+                e.currentTarget.style.color = 'var(--color-void)'
+              }}
             >
               Ver nuestro trabajo
             </a>
@@ -96,7 +157,27 @@ export default function HeroSection() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-4 bg-transparent border border-gold/50 hover:border-gold hover:bg-gold/5 text-gold font-display font-medium text-base rounded hover:scale-105 transition-all duration-300 cursor-pointer"
+              className="hover:scale-105 transition-all duration-300 cursor-pointer flex items-center justify-center"
+              style={{
+                background: 'transparent',
+                color: 'var(--color-ivory)',
+                border: '1px solid rgba(245, 240, 232, 0.4)',
+                padding: '0.85rem 2.2rem',
+                fontFamily: 'var(--font-body)',
+                fontWeight: 400,
+                fontSize: '0.95rem',
+                borderRadius: '2px',
+                cursor: 'pointer',
+                transition: 'all 300ms ease',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'var(--color-gold)'
+                e.currentTarget.style.color = 'var(--color-gold)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(245, 240, 232, 0.4)'
+                e.currentTarget.style.color = 'var(--color-ivory)'
+              }}
             >
               WhatsApp
             </a>

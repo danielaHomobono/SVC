@@ -67,11 +67,11 @@ export default function ProcessSection() {
     <section
       ref={containerRef}
       id="proceso"
-      className="relative py-24 md:py-32 lg:py-40 bg-void"
+      className="relative py-12 md:py-16 lg:py-20 bg-void"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
         {/* Header */}
-        <div className="mb-20">
+        <div className="mb-10">
           <span className="text-gold text-xs font-mono tracking-widest uppercase">
             Nuestro Proceso
           </span>
@@ -93,11 +93,11 @@ export default function ProcessSection() {
           />
 
           {/* Steps grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4">
             {PROCESS_STEPS.map((step, idx) => (
               <div key={idx} className="process-step relative">
                 {/* Number circle */}
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-gold to-gold/70 flex items-center justify-center mb-6 mx-auto md:mx-0">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-gold to-gold/70 flex items-center justify-center mb-3 mx-auto md:mx-0">
                   <span className="text-void font-display text-2xl font-bold">
                     {step.number}
                   </span>
@@ -105,10 +105,10 @@ export default function ProcessSection() {
 
                 {/* Content */}
                 <div className="text-center md:text-left">
-                  <h3 className="text-2xl font-display font-light text-ivory mb-3">
+                  <h3 className="text-2xl font-display font-light text-ivory mb-1.5">
                     {step.title}
                   </h3>
-                  <p className="text-ivory/70 text-base leading-relaxed mb-4">
+                  <p className="text-ivory/70 text-base leading-relaxed mb-2">
                     {step.description}
                   </p>
                   <div className="inline-block md:block">

@@ -1,14 +1,24 @@
 export const BUSINESS = {
   name: 'SVC Amoblamientos',
-  tagline: 'Muebles a medida que transforman espacios',
-  phone: '+5493571234567', // Reemplazar con número real
-  email: 'contacto@svcamoblamientos.com',
+  address: 'Independencia 58, Río Tercero, Córdoba',
+  addressShort: 'Independencia 58, Río Tercero',
+  postalCode: 'X5850',
   city: 'Río Tercero, Córdoba',
-  instagram: '@svc_amoblamientos',
-  leadTime: '48 horas de anticipación para presupuestos',
+  phone: '+5493571692109',
+  phoneDisplay: '+54 9 3571 69-2109',
+  instagram: 'https://www.instagram.com/svc_amoblamientos/',
+  instagramHandle: '@svc_amoblamientos',
+  googleMaps: 'https://www.google.com/maps/place/SVC+Amoblamientos/@-32.1764823,-64.1048062,17z',
+  hours: {
+    weekdays: 'Lunes a Viernes · 9 a 18hs',
+    saturday: 'Sábados · 9 a 13hs',
+  },
 }
 
-export const WHATSAPP_URL = `https://wa.me/${BUSINESS.phone.replace(/\D/g, '')}?text=Hola%2C%20me%20interesa%20un%20presupuesto%20para%20muebles`
+// URL de WhatsApp con mensaje pre-cargado
+export const WHATSAPP_URL = `https://wa.me/5493571692109?text=${encodeURIComponent(
+  'Hola! Me interesa un presupuesto para muebles a medida.'
+)}`
 
 export const SERVICES = [
   { 

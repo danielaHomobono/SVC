@@ -1,13 +1,23 @@
 'use client'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { SERVICES } from '@/lib/constants'
 import { initGSAP } from '@/lib/gsapConfig'
 
 export default function ServicesSection() {
   const sectionRef = useRef<HTMLDivElement | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  useEffect(() => {
+    if (isMobile) return
+
     const { gsap, ScrollTrigger } = initGSAP()
     if (!gsap || !ScrollTrigger || !sectionRef.current || !containerRef.current) return
 
@@ -15,19 +25,30 @@ export default function ServicesSection() {
     const sectionHeight = container.scrollWidth
     
     // Pin section and animate horizontal scroll - más compacto (150vh en lugar de 300vh)
-    gsap.to(container, {
+    const anim = gsap.to(container, {
       x: -sectionHeight + window.innerWidth,
       ease: 'none',
       scrollTrigger: {
         trigger: sectionRef.current,
         start: 'top top',
-        end: `+=${sectionHeight * 0.6}`,
+        end: () => `+=${sectionHeight * 0.36}`,
         scrub: 1,
         pin: true,
         markers: false,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
       },
     })
-  }, [])
+
+    return () => {
+      anim.kill()
+      ScrollTrigger.getAll().forEach((trigger: any) => {
+        if (trigger.trigger === sectionRef.current) {
+          trigger.kill()
+        }
+      })
+    }
+  }, [isMobile])
 
   return (
     <section
@@ -36,6 +57,8 @@ export default function ServicesSection() {
       className="relative py-24 md:py-32 lg:py-40 bg-void"
       style={{
         overflow: 'hidden',
+        height: isMobile ? 'auto' : undefined,
+        paddingBottom: isMobile ? '3rem' : undefined
       }}
     >
       {/* Contenedor principal para el scroll */}
@@ -44,28 +67,24 @@ export default function ServicesSection() {
       <div
         ref={containerRef}
         className="flex gap-8 md:gap-16 px-6 md:px-20 py-12 overflow-visible"
+        style={{
+          display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row',
+        }}
       >
-        {/* Intro slide */}
-        <div className="min-w-[85vw] lg:min-w-[60vw] flex items-center justify-center px-6">
-          <div className="max-w-xl text-center md:text-left space-y-6">
-            <span className="text-gold text-xs font-mono tracking-widest uppercase">
-              Lo que ofrecemos
-            </span>
-            <h2 className="text-3xl md:text-5xl font-display font-light text-ivory leading-tight">
-              Soluciones de <br />
-              <span className="italic text-gold font-serif">carpintería a medida</span>
-            </h2>
-            <p className="text-grain/80 text-base md:text-lg leading-relaxed">
-              Cada proyecto es una oportunidad para crear algo extraordinario. Diseñamos y construimos amoblamientos que se adaptan perfectamente a tu estilo de vida.
-            </p>
-          </div>
-        </div>
-
         {/* Service cards */}
         {SERVICES.map((service, idx) => (
           <div
             key={service.id}
             className="min-w-[85vw] lg:min-w-[60vw] flex items-center justify-center px-6"
+            style={{
+              width: isMobile ? '100%' : 'auto',
+              minWidth: isMobile ? '0' : undefined,
+              flexShrink: 0,
+              height: isMobile ? 'auto' : '100vh',
+              minHeight: isMobile ? 'auto' : '100vh',
+              padding: isMobile ? '2.5rem 1.5rem' : undefined,
+            }}
           >
             <div className="w-full max-w-2xl p-8 md:p-12 bg-charcoal/40 border border-gold/10 hover:border-gold/20 rounded-2xl backdrop-blur-md shadow-2xl transition-all duration-500 hover:shadow-[0_10px_40px_rgba(201,168,76,0.05)] group">
               {/* Icon/Number */}

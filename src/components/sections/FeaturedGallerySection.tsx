@@ -23,9 +23,9 @@ const featuredWorks: FeaturedWork[] = [
   },
   {
     id: 'detalle-carpinteria',
-    title: 'Detalles en Carpintería',
+    title: 'Detalle de Mesada',
     category: 'Detalles',
-    description: 'Acabados precisos y artesanales',
+    description: 'Terminación de mesadas y empalmes perfectos',
     image: '/images/portfolio/detalle-1.jpg',
   },
   {
@@ -129,7 +129,7 @@ export default function FeaturedGallerySection() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-24 md:py-32 lg:py-40 bg-void"
+      className="relative py-12 md:py-16 lg:py-20 bg-void"
     >
       {/* Fondo decorativo */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -139,7 +139,7 @@ export default function FeaturedGallerySection() {
 
       <div className="relative z-10">
         {/* Header */}
-        <div ref={titleRef} className="mb-20 px-6 md:px-12 lg:px-20">
+        <div ref={titleRef} className="mb-8 px-6 md:px-12 lg:px-20">
           <div className="inline-block mb-6">
             <span className="text-gold text-xs font-mono tracking-widest uppercase">
               Nuestros Mejores Trabajos
@@ -156,7 +156,7 @@ export default function FeaturedGallerySection() {
         </div>
 
         {/* Gallery Grid - 2 cols en todos, simple y limpio */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20 px-6 md:px-12 lg:px-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 px-6 md:px-12 lg:px-20">
           {featuredWorks.map((work, index) => (
             <div
               key={work.id}

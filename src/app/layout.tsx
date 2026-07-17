@@ -1,7 +1,7 @@
 import '../globals.css'
 import React from 'react'
 import { SmoothScrollProvider } from '@/components/providers/SmoothScrollProvider'
-import { Cormorant_Garamond, DM_Sans, DM_Mono } from 'next/font/google'
+import { Cormorant_Garamond, Plus_Jakarta_Sans, DM_Mono } from 'next/font/google'
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -11,11 +11,11 @@ const cormorant = Cormorant_Garamond({
   style: ['normal', 'italic'],
 })
 
-const dmSans = DM_Sans({
+const plusJakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  display: 'swap',
+  weight: ['300', '400', '500'],
   variable: '--font-body',
-  weight: ['300', '400', '500', '700'],
+  display: 'swap',
 })
 
 const dmMono = DM_Mono({
@@ -32,8 +32,8 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className={`${cormorant.variable} ${dmSans.variable} ${dmMono.variable} scroll-smooth`}>
-      <body>
+    <html lang="es" className="scroll-smooth">
+      <body className={`${cormorant.variable} ${plusJakarta.variable} ${dmMono.variable}`}>
         <SmoothScrollProvider>
           {children}
         </SmoothScrollProvider>
