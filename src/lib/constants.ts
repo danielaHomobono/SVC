@@ -12,8 +12,8 @@ export const BUSINESS = {
   facebookHandle: 'SVC Amoblamientos',
   googleMaps: 'https://www.google.com/maps/place/SVC+Amoblamientos/@-32.1764823,-64.1048062,17z',
   hours: {
-    weekdays: 'Lunes a Viernes · 9 a 18hs',
-    saturday: 'Sábados · 9 a 13hs',
+    weekdays: 'Lunes a Viernes · 8:30 a 12:30 y 15:30 a 19:30 hs',
+    saturday: 'Sábados · 8 a 13 hs',
   },
 }
 
@@ -26,30 +26,30 @@ export const SERVICES = [
   {
     id: 'cocinas',
     name: 'Cocinas',
-    description: 'Diseño y fabricación de muebles de cocina a medida.',
-    image: '/images/portfolio/cocina-1.jpg',
-    features: ['Medidas personalizadas', 'Herrajes de primera'],
+    description: 'Diseñamos y fabricamos cocinas a medida, aprovechando cada centímetro de tu espacio.',
+    image: '/images/servicios/cocinas.jpg',
+    features: ['Diseño personalizado', 'Herrajes de primera'],
   },
   {
-    id: 'comedores',
-    name: 'Comedores',
-    description: 'Mesas, sillas y aparadores que transforman cada comida.',
-    image: '/images/portfolio/comedor-1.jpg',
-    features: ['Diseño personalizado', 'Maderas seleccionadas'],
-  },
-  {
-    id: 'dormitorios',
-    name: 'Dormitorios',
-    description: 'Placares y cómodas que combinan funcionalidad y estética.',
-    image: '/images/portfolio/placar-1.jpg',
-    features: ['Placares con espejo', 'Sistemas de organización'],
+    id: 'placares',
+    name: 'Placares y Vestidores',
+    description: 'Placares y vestidores con sistemas de organización pensados para tu día a día.',
+    image: '/images/servicios/placares.jpg',
+    features: ['Interiores a medida', 'Terminaciones prolijas'],
   },
   {
     id: 'banos',
     name: 'Baños',
-    description: 'Vanitorios y muebles de baño que resisten la humedad.',
-    image: '/images/portfolio/bano-1.jpg',
-    features: ['Materiales resistentes', 'Terminaciones premium'],
+    description: 'Vanitorios y muebles de baño en materiales que resisten la humedad sin perder estética.',
+    image: '/images/servicios/banos.jpg',
+    features: ['Materiales resistentes', 'Diseño funcional'],
+  },
+  {
+    id: 'medida',
+    name: 'Muebles a medida',
+    description: 'Racks de TV, muebles comerciales y proyectos especiales. Si lo imaginás, lo fabricamos.',
+    image: '/images/servicios/medida.jpg',
+    features: ['Proyectos únicos', 'Asesoramiento sin cargo'],
   },
 ]
 

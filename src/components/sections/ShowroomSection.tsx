@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import { initGSAP } from '@/lib/gsapConfig'
+import { BUSINESS } from '@/lib/constants'
 
 export default function ShowroomSection() {
   const sectionRef = useRef<HTMLElement | null>(null)
@@ -191,8 +192,8 @@ export default function ShowroomSection() {
               </span>
               <div>
                 <p className="font-normal text-ivory">Horarios de atención</p>
-                <p className="text-sm opacity-80">Lunes a Viernes · 9 a 18hs</p>
-                <p className="text-sm opacity-80">Sábados · 9 a 13hs</p>
+                <p className="text-sm opacity-80">{BUSINESS.hours.weekdays}</p>
+                <p className="text-sm opacity-80">{BUSINESS.hours.saturday}</p>
               </div>
             </div>
 
